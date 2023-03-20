@@ -1,5 +1,4 @@
 resource "aws_lambda_layer_version" "lambda_layer_version" {
-
   layer_name               = var.lambda_layer_name
   compatible_runtimes      = ["python3.8"]
   compatible_architectures = ["x86_64"]

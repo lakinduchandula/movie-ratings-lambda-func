@@ -1,5 +1,10 @@
 import pandas as pd
+import logging
 import json
+
+# initialize logger
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
 def lambda_handler(event, context):
     
@@ -10,15 +15,63 @@ def lambda_handler(event, context):
         # Create pandas DataFrame
         df = pd.DataFrame(data['movies'])
     
-        # # Calculate average rating
+    except Exception as e:
+        # Handle the exception and return an error response
+
+        # Log the error to cloudwatch
+        logger.error('## Error: When creating pandas DataFrame; %s', str(e))
+
+        return {
+            'statusCode': 500,
+            'body': 'Error: When creating pandas DataFrame: {}'.format(str(e))
+        }
+    
+    try:
+        # Calculate average rating
         avg_rating = average_rating(df)
     
+    except Exception as e:
+        # Handle the exception and return an error response
+
+        # Log the error to cloudwatch
+        logger.error('## Error: When calculating the average rating; %s', str(e))
+
+        return {
+            'statusCode': 500,
+            'body': 'Error: When calculating the average rating: {}'.format(str(e))
+        }
+
+    try:
         # Director with most movies
         most_frequent_director = director_for_most_movies(df)
-    
-        # # Filter movies with above-average rating
+
+    except Exception as e:
+        # Handle the exception and return an error response
+
+        # Log the error to cloudwatch
+        logger.error('## Error: When generating director who direct most movies; %s', str(e))
+
+        return {
+            'statusCode': 500,
+            'body': 'Error: When generating director who direct most movies: {}'.format(str(e))
+        }
+
+    try:
+        # Filter movies with above-average rating
         movies_above_average_rating = movies_are_above_avg_rating(df, avg_rating)
     
+    except Exception as e:
+        # Handle the exception and return an error response
+
+        # Log the error to cloudwatch
+        logger.error('## Error: When calculate movies above average rating; %s', str(e))
+
+        return {
+            'statusCode': 500,
+            'body': 'Error: When calculate movies above average rating: {}'.format(str(e))
+        }
+    
+    try:
         # Create the output dictionary
         output_dict = {
             "average_rating": float(avg_rating),
@@ -29,6 +82,9 @@ def lambda_handler(event, context):
         # Convert output_dict to JSON
         output_json = json.dumps(output_dict)
 
+        # Log the output
+        logger.info('## Response returned: %s', output_json)
+
         return {
             'statusCode': 200,
             'body': output_json
@@ -36,9 +92,13 @@ def lambda_handler(event, context):
         
     except Exception as e:
         # Handle the exception and return an error response
+
+        # Log the error
+        logger.error('## Error: When making the response after all processing; %s', str(e))
+
         return {
             'statusCode': 500,
-            'body': 'Error: {}'.format(str(e))
+            'body': 'Error: Error: When making the response after all processing: {}'.format(str(e))
         }
 
 def average_rating(df):
@@ -50,8 +110,9 @@ def director_for_most_movies(df):
     take unique count for every director
     return the director who has the most count
     
-    special scenario: if there are more than one director return list of directors
-    
+    special scenario -01 : if there are more than one director return list of directors
+    special scenario -02 : if there there is no director more than direct one movie return all the directors
+
     """
     director_counts = df['director'].value_counts()
    
