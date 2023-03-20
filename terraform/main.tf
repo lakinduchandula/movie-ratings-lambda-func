@@ -34,10 +34,19 @@ module "lambda" {
   s3_bucket_id  = module.s3_bucket.s3_bucket_id
   s3_bucket_key = module.s3_bucket.s3_bucket_key
 
+  iam_role_arn   = module.iam.iam_role_arn
+  iam_role_name  = module.iam.iam_role_name
+  iam_policy_arn = module.iam.iam_policy_arn
+
 }
 
 module "s3_bucket" {
-  source         = "./s3_bucket"
-  
+  source = "./s3_bucket"
+
   layer_zip_path = data.archive_file.layer_zip.output_path
+}
+
+module "iam" {
+  source = "./iam"
+  
 }

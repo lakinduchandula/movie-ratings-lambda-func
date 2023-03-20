@@ -33,7 +33,6 @@ resource "aws_cloudwatch_log_group" "cloudwath_log_group" {
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
-  //TODO: import from iam module
   role       = var.iam_role_name
   policy_arn = var.iam_policy_arn
 }
