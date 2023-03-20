@@ -1,6 +1,6 @@
 resource "aws_lambda_layer_version" "lambda_layer_version" {
 
-  layer_name               = "pandas-layer-python-test"
+  layer_name               = var.lambda_layer_name
   compatible_runtimes      = ["python3.8"]
   compatible_architectures = ["x86_64"]
 
@@ -10,10 +10,10 @@ resource "aws_lambda_layer_version" "lambda_layer_version" {
 }
 
 resource "aws_lambda_function" "lambda_function" {
-  function_name    = "lambda_function"
+  function_name    = var.lambda_function_name
   role             = var.iam_role_arn
   filename         = var.lambda_zip_path
-  handler          = "lambda_function.lambda_handler"
+  handler          = "${var.lambda_function_name}.lambda_handler"
   runtime          = "python3.8"
   source_code_hash = var.lambda_zip_output_base64sha256
 
@@ -28,7 +28,7 @@ resource "aws_lambda_function" "lambda_function" {
 }
 
 resource "aws_cloudwatch_log_group" "cloudwath_log_group" {
-  name              = "/aws/lambda/lambda_function"
+  name              = "/aws/lambda/${var.lambda_function_name}"
   retention_in_days = 14
 }
 
