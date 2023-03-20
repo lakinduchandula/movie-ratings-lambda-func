@@ -31,4 +31,13 @@ module "lambda" {
   lambda_zip_path                = data.archive_file.lambda_zip.output_path
   lambda_zip_output_base64sha256 = data.archive_file.lambda_zip.output_base64sha256
 
+  s3_bucket_id  = module.s3_bucket.s3_bucket_id
+  s3_bucket_key = module.s3_bucket.s3_bucket_key
+
+}
+
+module "s3_bucket" {
+  source         = "./s3_bucket"
+  
+  layer_zip_path = data.archive_file.layer_zip.output_path
 }

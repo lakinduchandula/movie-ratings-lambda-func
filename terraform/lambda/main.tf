@@ -4,7 +4,8 @@ resource "aws_lambda_layer_version" "lambda_layer_version" {
   compatible_runtimes      = ["python3.8"]
   compatible_architectures = ["x86_64"]
 
-  //TODO: when s3 bucket created bucketId and key
+  s3_bucket = var.s3_bucket_id
+  s3_key    = var.s3_bucket_key
 
 }
 
