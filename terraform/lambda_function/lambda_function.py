@@ -4,19 +4,19 @@ import json
 def lambda_handler(event, context):
     
     try:
-        # Extract JSON data from request body
-        json_data = json.loads(json.dumps(event['movies']))
+        # Load JSON data from event
+        data = json.loads(event['body'])
     
-        # Create Pandas DataFrame from JSON data
-        df = pd.DataFrame(json_data)
+        # Create pandas DataFrame
+        df = pd.DataFrame(data['movies'])
     
-        # Calculate average rating
+        # # Calculate average rating
         avg_rating = average_rating(df)
     
         # Director with most movies
         most_frequent_director = director_for_most_movies(df)
     
-        # Filter movies with above-average rating
+        # # Filter movies with above-average rating
         movies_above_average_rating = movies_are_above_avg_rating(df, avg_rating)
     
         # Create the output dictionary
@@ -25,8 +25,14 @@ def lambda_handler(event, context):
             "director_with_most_movies": most_frequent_director,
             "movies_above_average_rating": movies_above_average_rating
         }
-    
-        return output_dict
+        
+        # Convert output_dict to JSON
+        output_json = json.dumps(output_dict)
+
+        return {
+            'statusCode': 200,
+            'body': output_json
+        }
         
     except Exception as e:
         # Handle the exception and return an error response
