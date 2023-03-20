@@ -19,12 +19,6 @@ data "archive_file" "lambda_zip" {
   output_path = "../infrastructure/zipped/lambda.zip"
 }
 
-data "archive_file" "layer_zip" {
-  type        = "zip"
-  source_dir  = "../infrastructure/package"
-  output_path = "../infrastructure/zipped/package.zip"
-}
-
 module "lambda" {
   source = "./lambda"
 
@@ -43,7 +37,7 @@ module "lambda" {
 module "s3_bucket" {
   source = "./s3_bucket"
 
-  layer_zip_path = data.archive_file.layer_zip.output_path
+  layer_zip_path = var.layer_zip_path
 }
 
 module "iam" {
