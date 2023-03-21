@@ -29,6 +29,8 @@ override.tf.json
 # example: *tfplan*
 
 # exclude python virtual environment packages
+infrastructure/zipped/lambda.zip
 infrastructure/package
-infrastructure/*.zip
 
+# terraform lock files
+.terraform.lock.hcl
