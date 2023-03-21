@@ -1,43 +1,36 @@
 
-# Movie Rating Lmabda Function
+# Movie Rating Lambda Function
 
 Project was focused on Terraform and Python. The tasks involved creating an AWS infrastructure using Terraform and implementing a Python function to perform operations on a JSON input.
 
-This project required creating an AWS infrastructure consisting of an API Gateway, a Lambda function, and an IAM role with appropriate permissions. The API Gateway was configured to trigger the Lambda function upon receiving a POST request, and the Lambda function was responsible for processing the JSON input and performing various operations.
-
-
-
-
+This project required creating an AWS infrastructure consisting of an API Gateway, a Lambda function, and an IAM role with appropriate permissions. The API Gateway was configured to trigger the Lambda function upon receiving a POST request and the Lambda function was responsible for processing the JSON input and performing various operations.
 
 ## Install python packages
 01. Virtual python enviroment was created using [pipenv](https://pipenv.pypa.io/en/latest/).
-Once it's done can generate requirements.txt file
-
-
-
-
-
-
+Once it's done can generate requirements.txt file:
 ```bash
 pipenv requirements > requirements.txt
 ```
 
-02. Install the requests library to a new package directory
+02. Install the requests library to a new package directory:
 ```bash
 pip install --target ./infrastructure/package/python -r requirements.txt
 ```
 
 ## Configure AWS CLI
-03. If you didn't configure AWS CLI then [install aws cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and follow steps,
+03. If you didn't configure AWS CLI then [install aws cli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and follow steps:
 ```bash
 aws configure
+```
+```console
 AWS Access Key ID [****************FUVH]: <Paste Access Key ID>
 AWS Secret Access Key [****************ysCp]: <Paste Secret Access Key>
 ```
-- You can get the appropriate aws credentials through AWS IAM.
+
+- You can get the appropriate aws credentials through AWS IAM
 
 ## Initialize Terraform
-04. Change the directory to initialize terraform
+04. Change the directory to initialize terraform:
 ```bash
 cd ./terraform
 ```
@@ -55,12 +48,12 @@ terraform apply
 ```
 
 ## Go to the URL output of Terraform
-07. After Terraform has completed running, you’ll get an output with the URL for the API gateway endpoint.
+07. After Terraform has completed running, you’ll get an output with the URL for the API gateway endpoint:
 
 It will look something like this:![terraform_output_endpoint](https://user-images.githubusercontent.com/71013438/226530456-fb3872e7-c89b-4c07-afdb-47b289254530.jpg)
 
 ## Test the solution
-Since the API Gateway endpoint accept HTTP POST requests, We can't open this link in web-browser. Instead we should use a tool such as [Postman](https://www.postman.com/downloads/).
+Since this is a POST request, the URL cannot be accessed through a web browser. Instead, tools like [Postman](https://www.postman.com/downloads/) can be used to send a POST request and receive a response in the expected JSON format.
 
 ## Steps to use Postman
     1. Open Postman and click on the "New" button to create a new request.
@@ -77,13 +70,13 @@ Since the API Gateway endpoint accept HTTP POST requests, We can't open this lin
 
 ## NOTE : Python package download
 
-Please note that when using Pipenv to install Python packages, there may be instances where the package may not be downloaded correctly to the Linux environment. In such cases, manual downloading of the package may be necessary.
+Please note that when using `pip` to install Python packages, there may be instances where the package may not be downloaded correctly to the Linux environment. In such cases, manual downloading of the package may be necessary.
 
 ![python_pkg_download](https://user-images.githubusercontent.com/71013438/226535201-85d77538-5eac-4e23-859d-895b06f384ec.jpg)
 
-- Yellow colour manylinux package is the idea package for aws lambda environment
+- Yellow colour manylinux package is the ideal package for aws lambda environment.
 
-- But when I download packages in Windows OS, pipenv download the Green colour package, which was cause errors.
+- But when I download packages in Windows OS, `pip` download the Green colour package, which caused errors.
 
-- `I had to manually download the required pandas and related packages and zip it.`
+- `I had to manually download the required pandas and related packages and zipped it.`
 
