@@ -29,26 +29,34 @@ AWS Secret Access Key [****************ysCp]: <Paste Secret Access Key>
 
 - You can get the appropriate aws credentials through AWS IAM
 
+## Clone the repository 
+04. Clone the repository by paste the following code and change current directory to repository:
+```bash
+git clone https://github.com/lakinduchandula/movie-ratings-lambda-func
+cd movie-ratings-lambda-func
+```
+
 ## Initialize Terraform
-04. Change the directory to initialize terraform:
+05. Change the directory to initialize terraform:
 ```bash
 cd ./terraform
+terraform init
 ```
 
 ## Plan Terraform
-05. Now run a plan to see what Terraform will attempt to provision:
+06. Now run a plan to see what Terraform will attempt to provision:
 ```bash
 terraform plan
 ```
 
 ## Apply Terraform
-06. Once you’re happy with the proposed changes, apply Terraform:
+07. Once you’re happy with the proposed changes, apply Terraform:
 ```bash
 terraform apply
 ```
 
 ## Go to the URL output of Terraform
-07. After Terraform has completed running, you’ll get an output with the URL for the API gateway endpoint:
+08. After Terraform has completed running, you’ll get an output with the URL for the API gateway endpoint:
 
 It will look something like this:![terraform_output_endpoint](https://user-images.githubusercontent.com/71013438/226530456-fb3872e7-c89b-4c07-afdb-47b289254530.jpg)
 
@@ -78,5 +86,5 @@ Please note that when using `pip` to install Python packages, there may be insta
 
 - But when I download packages in Windows OS, `pip` download the Green colour package, which caused errors.
 
-- `I had to manually download the required pandas and related packages and zipped it.`
+- `I had to manually download the required pandas and related packages and zipped it.  If you're in Linux OS you can fully download packages through requirement.txt`
 
