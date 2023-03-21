@@ -19,6 +19,22 @@ data "archive_file" "lambda_zip" {
   output_path = "../infrastructure/zipped/lambda.zip"
 }
 
+/*** SPECIAL NOTE
+
+  * Since AWS Lambda Functions are running on Linux environment,
+  * required python packages must be downloaded under that environment.
+  * but pipenv was downloading those required (pandas) packages not for
+  * Linux environment.
+  * So, I had to download those packages manually and zip them.
+  * That is why below data source is commented out.
+
+data "archive_file" "layer_zip" {
+  type        = "zip"
+  source_dir  = "../infrastructure/package"
+  output_path = "../infrastructure/zipped/package.zip"
+}
+*/
+
 module "lambda" {
   source = "./lambda"
 
